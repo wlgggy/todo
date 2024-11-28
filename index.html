@@ -12,9 +12,11 @@
         box-sizing: border-box;
         font-size: 30px;
       }
+
       body {
         background-color: #e9e9e9;
       }
+
       .container {
         position: absolute;
         top: 50%;
@@ -28,23 +30,57 @@
         border-radius: 5px;
         border: none;
       }
+
       .todoList {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        padding-top: 10px;
       }
+      
+      h1{
+        padding: 15px;
+      }
+
+      .form{
+        display: flex;
+        align-items: center;
+      }
+
       .todoList > div {
-        width: 363px;
+        width: 420px;
         justify-content: space-between;
         display: flex;
         align-items: center;
         gap: 10px;
         padding: 5px;
       }
+
       button {
         width: 40px;
         height: 40px;
+        border: none;
+        border-radius: 5px;
       }
+
+      .input{
+        height: 40px;
+      }
+
+      .todo{
+        cursor: pointer;
+      }
+
+      .complete{
+        text-decoration: line-through;
+        cursor: pointer;
+      }
+
+      .todoList  button{
+        background-color: red;
+        color: white;
+      }
+
     </style>
   </head>
   <body>
@@ -61,6 +97,11 @@
     </div>
 
     <script>
+
+        /** CRUD
+         * create 생성, read 읽기, update 갱신, delete 삭제
+        */
+       
       const form = document.querySelector(".form");
       const input = document.querySelector(".input");
       const todoList = document.querySelector(".todoList");
@@ -71,8 +112,18 @@
         const inputText = input.value.trim();
         if (inputText === "") return console.log(inputText);
 
+        // 입력 사항 항목에 추가
         const todo = document.createElement("div");
         todo.textContent = inputText;
+        todo.classList.add("todo")
+        todo.addEventListener("click",function () {
+            todo.classList.add("complete")
+        })
+
+        // todo의 입력 값 받기, localStorage의 객체를 json으로 바꿔줍니다
+        let todoContent = (todo.textContent)
+        // console.log(todoContent)
+        localStorage.setItem("todoContent", JSON.stringify(todoContent))
 
         // X 누르면 삭제
         const deleteBtn = document.createElement("button");
@@ -81,17 +132,23 @@
           todoContainer.remove();
         });
 
+        // todoContainer라는 div를 만들어서 그 안에 todo랑 deleteBtn 넣어주기
         const todoContainer = document.createElement("div");
         todoContainer.appendChild(todo);
         todoContainer.appendChild(deleteBtn);
         todoList.appendChild(todoContainer);
 
+        // 초기화
         input.value = "";
       });
+
       /**
        * json.stringify() 함수 사용
        * 객체를 json으로 변환
        */
+
     </script>
+
+    
   </body>
 </html>
